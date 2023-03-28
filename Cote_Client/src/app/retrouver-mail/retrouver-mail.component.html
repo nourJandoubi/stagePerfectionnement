@@ -1,0 +1,227 @@
+<div class="login-root" [hidden]="visible">
+  <div
+    class="box-root flex-flex flex-direction--column"
+    style="min-height: 100vh; flex-grow: 1"
+  >
+    <div
+      class="box-root padding-top--24 flex-flex flex-direction--column"
+      style="flex-grow: 1; z-index: 9"
+    >
+      <div class="formbg-outer">
+        <div class="formbg">
+          <div class="formbg-inner padding-horizontal--48">
+            <span class="padding-bottom--15">
+              <strong> Retrouvez votre compte</strong></span
+            >
+            <div class="container-fluid" [hidden]="hidden">
+              <strong>Aucun résultat de recherche</strong>
+              <br />
+              Votre recherche ne donne aucun résultat. Veuillez réessayer avec
+              d’autres informations.
+            </div>
+            <form id="stripe-login" [formGroup]="retrouverMailForm">
+              <div class="field padding-bottom--24">
+                <div class="grid--50-50">
+                  <div class="reset-pass"></div>
+                </div>
+              </div>
+              <div
+                class="field field-checkbox padding-bottom--24 flex-flex align-center"
+              >
+                <label for="checkbox">
+                  Veuillez entrer votre adresse e-mail ou votre numéro de mobile
+                  pour rechercher votre compte.
+                </label>
+              </div>
+              <div class="field padding-bottom--24">
+                <input
+                  type="text"
+                  placeholder="Adresse e-mail"
+                  formControlName="login"
+                />
+              </div>
+              <input
+                type="button"
+                class="btn btn-primary"
+                value="rechercher"
+                (click)="envoyerMail()"
+              />
+            </form>
+          </div>
+        </div>
+        <div class="footer-link padding-top--24">
+          <div
+            class="listing padding-top--24 padding-bottom--24 flex-flex center-center"
+          >
+            <span
+              ><a href="https://www.attijarileasing.com.tn/"
+                >©attijarileasing</a
+              ></span
+            >
+            <span><a href="#">Contact</a></span>
+            <span><a href="#">Privacy & terms</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- entrez le code  -->
+
+<div class="login-root1" [hidden]="visible1">
+  <div
+    class="box-root flex-flex flex-direction--column"
+    style="min-height: 100vh; flex-grow: 1"
+  >
+    <div
+      class="box-root padding-top--24 flex-flex flex-direction--column"
+      style="flex-grow: 1; z-index: 9"
+    >
+      <div class="formbg-outer">
+        <div class="formbg">
+          <div class="formbg-inner padding-horizontal--48">
+            <span class="padding-bottom--15">
+              <strong> Entrez le code de sécurité</strong></span
+            >
+            <div class="container-fluid" [hidden]="hidden1">
+              <br />
+              Les chiffres saisis ne correspondent pas à votre code. Veuillez
+              réessayer.
+            </div>
+            <form [formGroup]="verifierCodeForm">
+              <div class="field padding-bottom--24">
+                <div class="grid--50-50">
+                  <div class="reset-pass"></div>
+                </div>
+              </div>
+              <div
+                class="field field-checkbox padding-bottom--24 flex-flex align-center"
+              >
+                <label for="checkbox">
+                  Merci de vérifier dans vos e-mails que vous avez reçu un
+                  message avec votre code. Celui-ci est composé de 6 chiffres.
+                </label>
+              </div>
+              <div class="field padding-bottom--24">
+                <input
+                  type="text"
+                  placeholder="entrez le code"
+                  formControlName="code"
+                />
+
+                <br />
+              </div>
+              <div class="d-flex justify-content-between">
+                <input
+                  type="button"
+                  class="btn btn-primary"
+                  value="continuer"
+                  (click)="verifierCode()"
+                />
+                <input
+                  type="button"
+                  class="btn btn-primary"
+                  value="annuler"
+                  (click)="annulerCode()"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="footer-link padding-top--24">
+          <div
+            class="listing padding-top--24 padding-bottom--24 flex-flex center-center"
+          >
+            <span
+              ><a href="https://www.attijarileasing.com.tn/"
+                >©attijarileasing</a
+              ></span
+            >
+            <span><a href="#">Contact</a></span>
+            <span><a href="#">Privacy & terms</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- //////restorer mot de passe  -->
+<div class="login-root2" [hidden]="motdepasse">
+  <div
+    class="box-root flex-flex flex-direction--column"
+    style="min-height: 100vh; flex-grow: 1"
+  >
+    <div
+      class="box-root padding-top--24 flex-flex flex-direction--column"
+      style="flex-grow: 1; z-index: 9"
+    >
+      <div class="formbg-outer">
+        <div class="formbg">
+          <div class="formbg-inner padding-horizontal--48">
+            <span class="padding-bottom--15">
+              <strong> Choisissez un nouveau mot de passe</strong></span
+            >
+            <!-- <div class="container-fluid" [hidden]="hidden">
+                   <strong>Aucun résultat de recherche</strong> 
+                    <br>
+                    Votre recherche ne donne aucun résultat. Veuillez réessayer avec d’autres informations.
+                  </div> -->
+            <form [formGroup]="restaurermotdepasseForm">
+              <div class="field padding-bottom--24">
+                <div class="grid--50-50">
+                  <div class="reset-pass"></div>
+                </div>
+              </div>
+              <div
+                class="field field-checkbox padding-bottom--24 flex-flex align-center"
+              >
+                <label for="checkbox">
+                  Créez un mot de passe d’au moins 6 caractères. Un mot de passe
+                  fort est une combinaison de lettres, de chiffres et de signes
+                  de ponctuation.
+                </label>
+              </div>
+              <div class="field padding-bottom--24">
+                <input
+                  type="text"
+                  placeholder="nouveau mot de passe"
+                  formControlName="motDePasse"
+                />
+
+                <br />
+              </div>
+              <div class="d-flex justify-content-between">
+                <input
+                  type="button"
+                  class="btn btn-primary"
+                  value="continuer"
+                  (click)="restaurermotdepasse()"
+                />
+                <input
+                  type="button"
+                  class="btn btn-primary"
+                  value="annuler"
+                  (click)="annulerCode()"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="footer-link padding-top--24">
+          <div
+            class="listing padding-top--24 padding-bottom--24 flex-flex center-center"
+          >
+            <span
+              ><a href="https://www.attijarileasing.com.tn/"
+                >©attijarileasing</a
+              ></span
+            >
+            <span><a href="#">Contact</a></span>
+            <span><a href="#">Privacy & terms</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

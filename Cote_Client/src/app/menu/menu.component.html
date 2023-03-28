@@ -1,0 +1,100 @@
+<nav
+  class="navbar navbar-expand-sm bg-dark navbar-dark d-flex justify-content-between"
+>
+  <div class="container-fluid">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="actif" routerLink="/accueil"
+          >accueil</a
+        >
+      </li>
+
+      <li class="nav-item" *ngIf="user == null || connected == false">
+        <a class="nav-link" routerLinkActive="actif" routerLink="/login"
+          >login</a
+        >
+      </li>
+
+      <li
+        class="nav-item dropdown"
+        dropdown
+        *ngIf="user != null && connected == true || adminservice.isloggedIn "
+      >
+        <a
+          dropdownToggle
+          mdbWavesEffect
+          type="button"
+          class="nav-link dropdown-toggle waves-light"
+          mdbWavesEffect
+        >
+          <mdb-icon fas icon="user"></mdb-icon> {{ user | uppercase
+          }}<span class="caret"></span
+        ></a>
+        <div
+          *dropdownMenu
+          class="dropdown-menu dropdown-menu-right dropdown dropdown-primary"
+          role="menu"
+        >
+          <a *ngIf="id=='621a4014b67d683c0336c6c5'  && connected == true ||adminservice.isloggedIn "
+           
+            class="dropdown-item waves-light"
+            mdbWavesEffect
+            routerLink="/acceuilAdmin"
+            >Admin Area</a
+          >
+
+          <a
+            class="dropdown-item waves-light"
+            mdbWavesEffect
+            *ngIf="user != null && connected == true ||adminservice.isloggedIn "
+            routerLinkActive="actif"
+            routerLink="/profil"
+            >profil</a
+          >
+          <a class="dropdown-item waves-light" mdbWavesEffect (click)="logout()"
+            >Log out</a
+          >
+        </div>
+      </li>
+
+      <!-- <li class="nav-item" *ngIf="adminservice.isloggedIn || connected == true">
+        <a class="nav-link" routerLinkActive="actif" routerLink="/profil"
+          >profil</a
+        >
+      </li>
+      <li class="nav-item" *ngIf="user != null && connected == true">
+        <a
+          dropdownToggle
+          mdbWavesEffect
+          type="button"
+          class="nav-link dropdown-toggle waves-light"
+          mdbWavesEffect
+        >
+          <mdb-icon fas icon="user"></mdb-icon> {{ user | uppercase }}</a
+        >
+      </li>
+      <li
+        class="nav-item"
+        *ngIf="
+          isAdmin == 'true' &&
+          connected == true &&
+          adminservice.isloggedIn &&
+          user != null
+        "
+      >
+        <a class="nav-link" routerLinkActive="actif" routerLink="/acceuilAdmin"
+          >Admin</a
+        >
+      </li>
+      <li class="nav-item" *ngIf="adminservice.isloggedIn || connected == true">
+        <a
+          class="nav-link"
+          routerLinkActive="actif"
+          (click)="logout()"
+          routerLink="/login"
+          >logout</a
+        >
+      </li> -->
+    </ul>
+  </div>
+</nav>

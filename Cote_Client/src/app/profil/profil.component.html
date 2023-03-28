@@ -1,0 +1,146 @@
+<div class="bg">
+  <div class="d-flex justify-content-center pt-3">
+    <form [formGroup]="ProfilForm" class="formulaire">
+      nom et prénom
+      <input
+        type="text "
+        name="nom "
+        formControlName="nom"
+        class="form-control"
+        placeholder="nom"
+      />
+      <br />
+      <div
+        *ngIf="nome.errors?.required && nome.touched"
+        class="alert alert-danger"
+      >
+        le nom est requis
+      </div>
+      <div
+        *ngIf="nome.errors?.minlength && nome.dirty"
+        class="alert alert-warning"
+      >
+        le nom doit contenir au moins 4 lettres
+      </div>
+      matricule
+      <input
+        type="text "
+        name="matricule"
+        formControlName="matricule"
+        class="form-control"
+        placeholder="matricule"
+      />
+      <br />
+      <div
+        *ngIf="matriculee.errors?.required && matriculee.touched"
+        class="alert alert-danger"
+      >
+        le numéro de la carte d'identité est requis
+      </div>
+      <div
+        *ngIf="matriculee.errors?.pattern && matriculee.dirty"
+        class="alert alert-warning"
+      >
+        le numéro carte d'identité doit contenir 8 chiffres
+      </div>
+
+      Email
+      <input
+        type="text "
+        name="login "
+        formControlName="login"
+        class="form-control"
+        placeholder="login"
+      />
+      <div
+        *ngIf="logine.errors?.required && logine.touched"
+        class="alert alert-danger"
+      >
+        l'email est requis
+      </div>
+      <div
+        *ngIf="logine.errors?.pattern && logine.dirty"
+        class="alert alert-warning"
+      >
+        l'email est invalide il doit etre sous la forme ********
+        @attijarileasing.com.tn
+      </div>
+      <br />
+      mot de passe
+      <input
+        type="password"
+        name="motDePasse"
+        formControlName="motDePasse"
+        class="form-control"
+        placeholder="motDePasse"
+      />
+      <div
+        *ngIf="motDePassee.errors?.required && motDePassee.touched"
+        class="alert alert-danger"
+      >
+        le mot de passe est requis
+      </div>
+      <div
+        *ngIf="motDePassee.errors?.pattern && motDePassee.dirty"
+        class="alert alert-warning"
+      >
+        le mot de passe est invalide
+      </div>
+      <br />
+      <button
+        [disabled]="ProfilForm.invalid"
+        type="button"
+        mdbBtn
+        class="relative waves-light btn btn-primary btn-sm"
+        (click)="basicModal.show()"
+        mdbWavesEffect
+      >
+        modifier vos informations
+      </button>
+      <!-- [disabled]="ProfilForm.invalid" -->
+    </form>
+    <div
+      mdbModal
+      #basicModal="mdbModal"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myBasicModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-notify modal-lg modal-" role="document">
+        <div class="modal-content reservation">
+          <div class="modal-header">
+            <h1
+              class="text-center modal-title w-100 couleur"
+              id="myModalLabel "
+            >
+              <span>confirmer votre mot de passe</span>
+            </h1>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="motdepasseForm">
+              <div class="input-group mb-3">
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="ancien mot de passe "
+                  id="motDePasse"
+                  formControlName="motDePasse1"
+                />
+                <button
+                  class="btn btn-outline-sucess"
+                  type="button"
+                  (click)="basicModal.hide()"
+                  (click)="verifierMotDePasse(id)"
+                >
+                  ok!
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,191 @@
+<div class="col-md-10 text-right">
+  <h1>liste des employés</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">nom</th>
+        <th scope="col">prénom</th>
+        <th scope="col">matricule</th>
+        <th scope="col">email</th>
+        <th scope="col">supprimer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of employes">
+        <td>{{ t.nom }}</td>
+        <td>{{ t.prenom }}</td>
+        <td>{{ t.matricule }}</td>
+        <td>{{ t.login }}</td>
+        <!-- bouton modifier -->
+        <td>
+          <button class="btn btn-danger" (click)="supprimerEmploye(t._id)">
+            supprimer
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-trash"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+              />
+              <path
+                fill-rule="evenodd"
+                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+              />
+            </svg>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button
+    type="button"
+    mdbBtn
+    class="relative waves-light btn btn-primary btn-sm"
+    (click)="basicModal.show()"
+    mdbWavesEffect
+  >
+    ajouter un employé
+  </button>
+</div>
+<!-- model ajouter employe -->
+<div
+  mdbModal
+  #basicModal="mdbModal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myBasicModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-notify modal-lg modal-" role="document">
+    <div class="modal-content reservation">
+      <div class="modal-header">
+        <h1 class="text-center modal-title w-100 couleur" id="myModalLabel ">
+          <span>ajouter un employe</span>
+        </h1>
+      </div>
+      <form [formGroup]="employeForm">
+        <div class="modal-body">
+          <div>nom:</div>
+          <input type="text" class="form-control" formControlName="nom" />
+          <div
+            *ngIf="nome.errors?.required && nome.touched"
+            class="alert alert-danger"
+          >
+            le nom est requis
+          </div>
+          <div
+            *ngIf="nome.errors?.minlength && nome.dirty"
+            class="alert alert-warning"
+          >
+            le nom doit contenir au moins 4 lettres
+          </div>
+          <div>prénom:</div>
+          <input type="text" class="form-control" formControlName="prenom" />
+          <div
+            *ngIf="prenome.errors?.required && prenome.touched"
+            class="alert alert-danger"
+          >
+            le prénom est requis
+          </div>
+          <div
+            *ngIf="prenome.errors?.minlength && prenome.dirty"
+            class="alert alert-warning"
+          >
+            le prénom doit contenir au moins 4 lettres
+          </div>
+          <div>matricule:</div>
+          <input type="text" class="form-control" formControlName="matricule" />
+          <div
+            *ngIf="matriculee.errors?.required && matriculee.touched"
+            class="alert alert-danger"
+          >
+            le numéro de la carte d'identité est requis
+          </div>
+          <div
+            *ngIf="matriculee.errors?.pattern && matriculee.dirty"
+            class="alert alert-warning"
+          >
+            le numéro carte d'identité doit contenir 8 chiffres
+          </div>
+          <div>Email:</div>
+          <input type="text" class="form-control" formControlName="login" />
+          <div
+            *ngIf="logine.errors?.required && logine.touched"
+            class="alert alert-danger"
+          >
+            l'email est requis
+          </div>
+
+          <div>mot de passe:</div>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="motDePasse"
+          />
+          <div
+            *ngIf="motDePassee.errors?.required && motDePassee.touched"
+            class="alert alert-danger"
+          >
+            le mot de passe est requis
+          </div>
+          <div
+            *ngIf="motDePassee.errors?.pattern && motDePassee.dirty"
+            class="alert alert-warning"
+          >
+            le mot de passe est invalide
+          </div>
+          <!-- <div > -->
+          <!-- <div class="form-check" >
+            <input
+              class="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault1"
+              formControlName="isAdmin"
+            />
+            <label> Admin </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault2"
+              formControlName="isAdmin"
+              checked
+            /> -->
+          <!-- <label> employé </label>
+          </div>
+        </div> -->
+        </div>
+
+        <li class="list-group-item">
+          <button
+            type="button"
+            mdbBtn
+            class="relative waves-light btn btn-primary btn-sm"
+            (click)="ajouterEmploye()"
+            (click)="basicModal.hide()"
+            mdbWavesEffect
+          >
+            ok
+          </button>
+          <button
+            type="button"
+            mdbBtn
+            class="relative waves-light btn btn-secondary btn-sm"
+            (click)="basicModal.hide()"
+            mdbWavesEffect
+          >
+            annuler
+          </button>
+        </li>
+      </form>
+    </div>
+  </div>
+</div>

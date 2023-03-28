@@ -1,0 +1,63 @@
+<section class="vh-100" style="background-color: #5A81A6;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+          <div class="card" style="border-radius: 1rem;">
+            <div class="row g-0">
+              <div class="col-md-6 col-lg-5 d-none d-md-block">
+                <img
+                  src="..\assets\pexels-fauxels-3182834.jpg"
+                  alt="login form"
+                  class="img-fluid" style="border-radius: 1rem 0 0 1rem;"
+                  width="405" height="200px"
+                />
+              </div>
+              <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                <div class="card-body p-4 p-lg-5 text-black">
+  
+                  <form  [formGroup]="formAdmin" >
+  
+                    <div class="d-flex align-items-center mb-3 pb-1">
+                      
+                      <img src="..\assets\attijarileasing-attijari-leasing.png" alt="logo" width="100">
+                      
+                    </div>
+  
+                    <h5 class="fw-normal mb-1 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
+  
+                   <div class="d-flex align-items-start flex-column">
+                    <mat-form-field class="mb-2">
+                      <mat-hint >Enter your email</mat-hint>
+                      <input matInput placeholder="Email" type="email" formControlName="login" required>
+                     
+                      
+                      </mat-form-field>
+                    
+                     
+                  
+                  <mat-form-field class="mb-2">
+                    <mat-hint >Enter your password</mat-hint>
+                    <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="motDePasse" required>
+                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    
+                    </mat-form-field>
+                  </div>
+                  <br>
+                    <div class="pt-1 mb-4">
+                      <button class="btn btn-dark btn-lg btn-block" type="button" (click)="login()">Login</button>
+                    </div>
+  
+                    <a class="small text-muted" href="#!" routerLink="/retrouverMail">Forgot password?</a>
+                  
+                   
+                    
+                  </form>
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

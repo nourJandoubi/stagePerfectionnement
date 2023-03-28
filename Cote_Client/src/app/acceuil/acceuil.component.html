@@ -1,0 +1,324 @@
+<app-caroussel></app-caroussel>
+<br />
+<br />
+<br />
+<div class="row">
+  <div class="col-sm-8">
+    <!-- *ngIf="adminservice.isloggedIn" -->
+    <div class="col-md-10 text-right">
+      <app-actualite></app-actualite>
+      <app-document></app-document>
+    </div>
+  </div>
+
+  <!-- les liens utiles -->
+  <div class="col-sm-4">
+    <div class="d-flex" style="height: 500px">
+      <div class="vr"></div>
+      <div class="container">
+        <h1>liens utiles</h1>
+        <table class="table table-borderless">
+          <tr *ngFor="let t of liens">
+            <td>
+              <img
+                src="{{ 'http://localhost:3000' + t.icone }}"
+                height="80px"
+                width="50px"
+              />
+            </td>
+            <td>
+              <a
+                style="text-decoration: none; font-size: 20px"
+                [href]="t.lien"
+                class="link-dark"
+                >{{ t.nom }}</a
+              >
+            </td>
+            <td>
+              <button
+                *ngIf="
+                  adminservice.isloggedIn ||
+                  connected == true && user==t.user
+                "
+                class="btn btn-warning"
+                (click)="basicModalModifierLien.show()"
+                (click)="modifierLienUtile(t._id)"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-pencil"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"
+                  />
+                </svg>
+              </button>
+            </td>
+            <td>
+              <button
+                *ngIf="
+                  adminservice.isloggedIn ||
+                  connected == true && user==t.user
+                "
+                class="btn btn-danger"
+                (click)="supprimerLienUtile(t._id)"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-trash"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                  />
+                </svg>
+              </button>
+            </td>
+          </tr>
+        </table>
+
+        <!-- bouton ajouter un lien utile  -->
+        <button
+          *ngIf="adminservice.isloggedIn || connected == true"
+          type="button"
+          mdbBtn
+          class="relative waves-light btn btn-primary btn-sm"
+          (click)="basicModal1.show()"
+          mdbWavesEffect
+        >
+          ajouter un lien utile
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- model ajouter un lien utile -->
+<div
+  mdbModal
+  #basicModal1="mdbModal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myBasicModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-notify modal-lg modal-" role="document">
+    <div class="modal-content reservation">
+      <div class="modal-header">
+        <h1 class="text-center modal-title w-100 couleur" id="myModalLabel ">
+          <span>ajouter un lien utile</span>
+        </h1>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <form [formGroup]="lienForm">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-3">accédez à l'icone télécharger</div>
+                  <div class="col-sm">
+                    <div class="mb-3">
+                      <input
+                        class="form-control"
+                        type="file"
+                        (change)="selectFile($event)"
+                        id="formFile"
+                        formControlName="icone"
+                      />
+                      <div
+                        *ngIf="iconee.errors?.required && iconee.touched"
+                        class="alert alert-danger"
+                      >
+                        l'icone est requis
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3">nom du lien</div>
+                  <div class="col-sm">
+                    <div class="mb-3">
+                      <input class="form-control" formControlName="nom" />
+                    </div>
+                    <div
+                      *ngIf="nome.errors?.required && nome.touched"
+                      class="alert alert-danger"
+                    >
+                      le nom est requis
+                    </div>
+                    <div
+                      *ngIf="nome.errors?.minlength && nome.dirty"
+                      class="alert alert-warning"
+                    >
+                      la taille du nom est courte
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3">lien hypertexte</div>
+                  <div class="col-sm">
+                    <div class="mb-3">
+                      <input class="form-control" formControlName="lien" />
+                      <div
+                        *ngIf="liene.errors?.required && liene.touched"
+                        class="alert alert-danger"
+                      >
+                        le lien est requis
+                      </div>
+                      <!-- <div
+                        *ngIf="liene.errors?.minlength && liene.dirty"
+                        class="alert alert-warning"
+                      >
+                        la
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <button
+                  type="button"
+                  [disabled]="lienForm.invalid"
+                  mdbBtn
+                  class="relative waves-light btn btn-primary btn-sm"
+                  (click)="envoyerLien()"
+                  (click)="basicModal1.hide()"
+                  mdbWavesEffect
+                >
+                  ok
+                </button>
+                <button
+                  type="button"
+                  mdbBtn
+                  class="relative waves-light btn btn-secondary btn-sm"
+                  (click)="basicModal1.hide()"
+                  mdbWavesEffect
+                >
+                  annuler
+                </button>
+              </li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal modifier lien utile -->
+<div
+  mdbModal
+  #basicModalModifierLien="mdbModal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myBasicModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-notify modal-lg modal-" role="document">
+    <div class="modal-content reservation">
+      <div class="modal-header">
+        <h1 class="text-center modal-title w-100 couleur" id="myModalLabel ">
+          <span>modifier un lien utile</span>
+        </h1>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <form [formGroup]="modifierLienForm">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-3">accédez à l'icone télécharger</div>
+                  <div class="col-sm">
+                    <div class="mb-3">
+                      <input
+                        class="form-control"
+                        value="icone"
+                        type="file"
+                        (change)="selectFile($event)"
+                        id="formFile"
+                        formControlName="icone"
+                      />
+                      <div
+                        *ngIf="iconem.errors?.required && iconem.touched"
+                        class="alert alert-danger"
+                      >
+                        l'icone est requis
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3">nom du lien</div>
+                  <div class="col-sm">
+                    <div class="mb-3">
+                      <input class="form-control" formControlName="nom" />
+                      <div
+                        *ngIf="nomm.errors?.required && nomm.touched"
+                        class="alert alert-danger"
+                      >
+                        le nom est requis
+                      </div>
+                      <div
+                        *ngIf="nomm.errors?.minlength && nomm.dirty"
+                        class="alert alert-warning"
+                      >
+                        la taille du nom est courte
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3">lien hypertexte</div>
+                  <div class="col-sm">
+                    <div class="mb-3">
+                      <input class="form-control" formControlName="lien" />
+                      <div
+                        *ngIf="lienm.errors?.required && lienm.touched"
+                        class="alert alert-danger"
+                      >
+                        le lien est requis
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <button
+                  type="button"
+                  mdbBtn
+                  [disabled]="modifierLienForm.invalid"
+                  class="relative waves-light btn btn-primary btn-sm"
+                  (click)="basicModalModifierLien.hide()"
+                  (click)="confirmerModificationLienUtile()"
+                  mdbWavesEffect
+                >
+                  ok
+                </button>
+                <button
+                  type="button"
+                  mdbBtn
+                  class="relative waves-light btn btn-secondary btn-sm"
+                  (click)="basicModalModifierLien.hide()"
+                  mdbWavesEffect
+                >
+                  annuler
+                </button>
+              </li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

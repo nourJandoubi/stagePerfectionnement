@@ -1,0 +1,144 @@
+<div class="container">
+  <h1>les documents pdf partagés</h1>
+  <div
+    *ngFor="
+      let t of documents
+        | paginate: { itemsPerPage: 9, currentPage: a, totalItems: totalLength }
+    "
+  >
+    <a [href]="'http://localhost:3000/documents/'+t.docurl" target="_blank" style="text-decoration: none">
+      <img
+        src="https://img.icons8.com/external-vectorslab-flat-vectorslab/30/000000/external-pdf-file-format-files-and-folders-vectorslab-flat-vectorslab.png"
+      />
+      {{ t.nom }}
+    </a>
+    <button
+    *ngIf="adminservice.isloggedIn || connected == true && user==t.user "
+    class="btn btn-danger"
+    (click)="supprimerDocument(t._id)"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-trash"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+      />
+      <path
+        fill-rule="evenodd"
+        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+      />
+    </svg>
+  </button>
+  </div>
+  <pagination-controls (pageChange)="a = $event"></pagination-controls>
+</div>
+<!-- bouton ajouter un document  -->
+<button
+  type="button"
+  *ngIf="adminservice.isloggedIn || connected == true "
+  mdbBtn
+  class="relative waves-light btn btn-primary btn-sm"
+  (click)="basicModal.show()"
+  mdbWavesEffect
+>
+  ajouter un document
+</button>
+
+<!-- model ajouter document -->
+<div
+  mdbModal
+  #basicModal="mdbModal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myBasicModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-notify modal-lg modal-" role="document">
+    <div class="modal-content reservation">
+      <div class="modal-header">
+        <h1 class="text-center modal-title w-100 couleur" id="myModalLabel ">
+          <span>télécharger un document</span>
+        </h1>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <form [formGroup]="documentForm">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-3">accédez au document à télécharger</div>
+                  <div class="col-sm">
+                    <div class="mb-3">
+                      <label for="formFile" class="form-label"></label>
+                      <input
+                        class="form-control"
+                        type="file"
+                        (change)="selectFile($event)"
+                        id="formFile"
+                        formControlName="docurl"
+                      />
+                      <div
+                        *ngIf="docurle.errors?.required && docurle.touched"
+                        class="alert alert-danger"
+                      >
+                        le fichier pdf est requis
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-3">nom</div>
+                    <div class="col-sm">
+                      <div class="mb-3">
+                        <input class="form-control" formControlName="nom" />
+                      </div>
+                      <div
+                        *ngIf="nome.errors?.required && nome.touched"
+                        class="alert alert-danger"
+                      >
+                        le nom du fichier est requis
+                      </div>
+                      <div
+                        *ngIf="nome.errors?.minlength && nome.dirty"
+                        class="alert alert-warning"
+                      >
+                        la taille du nom est courte
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <button
+                  type="button"
+                  mdbBtn
+                  class="relative waves-light btn btn-primary btn-sm"
+                  (click)="envoyerFile()"
+                  mdbWavesEffect
+                  [disabled]="documentForm.invalid"
+                  (click)="basicModal.hide()"
+                >
+                  ok
+                </button>
+                <button
+                  type="button"
+                  mdbBtn
+                  class="relative waves-light btn btn-secondary btn-sm"
+                  mdbWavesEffect
+                  (click)="basicModal.hide()"
+                >
+                  annuler
+                </button>
+              </li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
